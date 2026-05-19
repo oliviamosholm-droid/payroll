@@ -1,0 +1,37 @@
+import type { Employee } from './mockEmployees';
+
+export const additionalMockEmployees: Employee[] = [
+    {
+        id: 'emp-6',
+        employeeNumber: '5045',
+        name: 'Sofie Christensen',
+        cpr: '050994-2233',
+        department: 'Salg',
+        salary: 36500,
+        hireDate: '14.09.2024',
+        payPeriod: 'Månedslønnede, forud',
+        status: 'pending',
+    },
+    {
+        id: 'emp-7',
+        employeeNumber: '5042',
+        name: 'Jonas Pedersen',
+        cpr: '221086-4455',
+        department: 'Lager',
+        salary: 30200,
+        hireDate: '01.07.2024',
+        payPeriod: '14-dages lønnede, udbetaling ulige uger',
+        status: 'pending',
+    },
+    {
+        id: 'emp-8',
+        employeeNumber: '5048',
+        name: 'Line Madsen',
+        cpr: '120195-6677',
+        department: 'Administration',
+        salary: 40000,
+        hireDate: '23.04.2025',
+        payPeriod: 'Månedslønnede, bagud',
+        status: 'pending',
+    },
+];

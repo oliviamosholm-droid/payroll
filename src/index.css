@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import '@economic/taco/taco.css';
+@import 'tailwindcss/utilities';
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+}
+
+#accounting-table {
+    width: 100%;
+}
