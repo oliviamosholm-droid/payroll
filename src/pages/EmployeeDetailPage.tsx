@@ -437,7 +437,6 @@ export function EmployeeDetailPage() {
         );
     }
 
-    const t = da.editDialog;
     const s = da.detailPage.stats;
 
     return (
@@ -458,8 +457,9 @@ export function EmployeeDetailPage() {
                 <Badge color={STATUS_COLOR[employee.status]} subtle>
                     {STATUS_LABEL[employee.status]}
                 </Badge>
-                <Button appearance="default" icon="chevron-down">
+                <Button appearance="default">
                     {da.detailPage.more}
+                    <Icon name="chevron-down" />
                 </Button>
             </div>
 

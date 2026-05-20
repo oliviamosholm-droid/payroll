@@ -12,7 +12,6 @@ import { ImportDialog } from '../features/employee-onboarding/ImportDialog';
 import { mockEmployees, type Employee } from '../data/mockEmployees';
 import {
     setEmployees as setStoreEmployees,
-    clearEmployees as clearStoreEmployees,
     useEmployees,
 } from '../store/employeesStore';
 import { da } from '../data/danishCopy';
@@ -111,13 +110,6 @@ export function EmployeeListPage({ editMode = 'page' }: Props = {}) {
                 });
             }
         }, 2000);
-    };
-
-    const handleReset = () => {
-        setFiles([]);
-        setProcessing(false);
-        clearStoreEmployees();
-        setDemoState('empty');
     };
 
     // Dialog now handles appending itself; this is a no-op confirmation hook.
