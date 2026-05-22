@@ -48,6 +48,10 @@ export const da = {
                 'Vælg "Et faneblad" (anbefales — skarpere kvalitet og lyd).',
                 'Vælg fanen med prototypen, og klik "Del".',
             ],
+            prev: 'Tilbage',
+            next: 'Næste',
+            stepOf: (current: number, total: number) =>
+                `Trin ${current} af ${total}`,
             tip: 'Tip: åbn prototypen i sin egen Chrome-fane før mødet for hurtigere deling.',
         },
         statusLabels: {

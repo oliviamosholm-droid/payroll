@@ -3319,6 +3319,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .min-h-\[2\.5rem\] {
   min-height: 2.5rem;
 }
+.min-h-\[40px\] {
+  min-height: 40px;
+}
 .min-h-\[75px\] {
   min-height: 75px;
 }
@@ -3739,9 +3742,6 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .gap-2 {
   gap: 0.5rem;
 }
-.gap-2\.5 {
-  gap: 0.625rem;
-}
 .gap-3 {
   gap: 0.75rem;
 }
@@ -3877,6 +3877,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 }
 .rounded-lg {
   border-radius: 8px;
+}
+.rounded-md {
+  border-radius: 0.375rem;
 }
 .rounded-sm {
   border-radius: 2px;
@@ -4204,6 +4207,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .p-2 {
   padding: 0.5rem;
 }
+.p-2\.5 {
+  padding: 0.625rem;
+}
 .p-3 {
   padding: 0.75rem;
 }
@@ -4357,6 +4363,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .\!pt-\[calc\(theme\(spacing\.3\)_\+_theme\(spacing\[0\.5\]\)\)\] {
   padding-top: calc(0.75rem + 0.125rem) !important;
 }
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -4469,6 +4478,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .text-\[10px\] {
   font-size: 10px;
 }
+.text-\[11px\] {
+  font-size: 11px;
+}
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -4553,6 +4565,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 }
 .leading-tight {
   line-height: 1.25;
+}
+.tracking-tight {
+  letter-spacing: -0.025em;
 }
 .tracking-wider {
   letter-spacing: 0.05em;
@@ -4749,6 +4764,11 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 }
 .transition-\[transform\] {
   transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-all {
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -5114,6 +5134,10 @@ html, body, #root {
   --tw-bg-opacity: 1;
   background-color: rgb(221 221 221 / var(--tw-bg-opacity, 1));
 }
+.hover\:bg-grey-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(172 172 172 / var(--tw-bg-opacity, 1));
+}
 .hover\:bg-grey-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(89 89 89 / var(--tw-bg-opacity, 1));
@@ -5379,6 +5403,9 @@ html, body, #root {
 }
 .disabled\:text-black\/50:disabled {
   color: rgb(28 28 28 / 0.5);
+}
+.disabled\:opacity-40:disabled {
+  opacity: 0.4;
 }
 .group:focus-within .group-focus-within\:flex {
   display: flex;

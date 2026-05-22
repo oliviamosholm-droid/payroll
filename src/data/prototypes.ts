@@ -14,12 +14,8 @@ export const projects: Project[] = [
         id: 'onboarding',
         title: 'Onboarding',
         summary:
-            'Hvordan får nye brugere medarbejdere ind i e-conomic Løn, uden at skulle indtaste hver enkelt manuelt?',
-        assumptions: [
-            'Brugere foretrækker at trække eksisterende lønsedler eller regneark ind frem for at indtaste hver medarbejder manuelt.',
-            'AI-udtrukne felter skal være visuelt klart markeret, så brugeren ved hvad der skal verificeres før der gemmes.',
-            'Klik på et udkast skal åbne en hurtig redigeringsflade — en modal er hurtigere end at navigere til en separat side.',
-        ],
+            'Valider antagelser om brugernes behov og adfærd i forbindelse med migrering af medarbejderdata til e-conomic løn. Testen fokuserer på upload-flow, AI-forslag, gennemgang af udkast og medarbejderoverblik.',
+        assumptions: [],
     },
     {
         id: 'scheduled-changes',
