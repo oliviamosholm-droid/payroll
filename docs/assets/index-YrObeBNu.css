@@ -4507,6 +4507,9 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .font-bold {
   font-weight: 700;
 }
+.font-medium {
+  font-weight: 500;
+}
 .font-normal {
   font-weight: 400;
 }
@@ -4693,6 +4696,11 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .shadow-\[0_6px_9px_0_rgba\(89\2c 85\2c 98\2c 0\.3\)\2c 0_0_1px_0_rgba\(89\2c 85\2c 98\2c 0\.2\)\] {
   --tw-shadow: 0 6px 9px 0 rgba(89,85,98,0.3),0 0 1px 0 rgba(89,85,98,0.2);
   --tw-shadow-colored: 0 6px 9px 0 var(--tw-shadow-color), 0 0 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-\[0_8px_24px_rgba\(0\2c 0\2c 0\2c 0\.12\)\2c 0_2px_4px_rgba\(0\2c 0\2c 0\2c 0\.06\)\] {
+  --tw-shadow: 0 8px 24px rgba(0,0,0,0.12),0 2px 4px rgba(0,0,0,0.06);
+  --tw-shadow-colored: 0 8px 24px var(--tw-shadow-color), 0 2px 4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .shadow-\[12px_0px_6px_white\] {

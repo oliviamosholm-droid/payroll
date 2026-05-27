@@ -5,12 +5,14 @@ import { EmployeeListPage } from './pages/EmployeeListPage';
 import { EmployeeDetailPage } from './pages/EmployeeDetailPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { OptionsPreviewPage } from './pages/OptionsPreviewPage';
+import { TranslatorProvider } from './i18n/Translator';
 import { da } from './data/danishCopy';
 import { PATHS } from './paths';
 
 function App() {
     return (
         <BrowserRouter basename={import.meta.env.BASE_URL}>
+            <TranslatorProvider>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
 
@@ -137,6 +139,7 @@ function App() {
 
                 <Route path="*" element={<Navigate to={PATHS.landing} replace />} />
             </Routes>
+            </TranslatorProvider>
         </BrowserRouter>
     );
 }
