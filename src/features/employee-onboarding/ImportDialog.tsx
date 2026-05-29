@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, Button, Spinner, Badge, Icon } from '@economic/taco';
 import { DropZone } from './DropZone';
 import {
@@ -212,16 +212,19 @@ function EnrichmentCard({ enrichment }: { enrichment: Enrichment }) {
                     ]}
                 />
             </div>
-            <dl className="border-t border-grey-200 px-3 py-2.5 grid grid-cols-[100px_1fr] gap-x-3 gap-y-1 text-xs items-center">
+            <dl className="border-t border-grey-200 px-3 py-2.5 flex flex-col gap-2 text-xs">
                 {enrichment.fields.map((f) => (
-                    <Fragment key={String(f.key)}>
+                    <div
+                        key={String(f.key)}
+                        className="flex flex-col gap-0.5"
+                    >
                         <dt className="text-neutral-500">{f.label}</dt>
                         <dd>
-                            <span className="rounded px-2 py-0.5 bg-yellow-100 text-neutral-900 inline-block max-w-full truncate">
+                            <span className="rounded bg-yellow-100 text-neutral-900 inline-block max-w-full truncate px-1.5 py-0.5 -ml-1.5">
                                 {f.value}
                             </span>
                         </dd>
-                    </Fragment>
+                    </div>
                 ))}
             </dl>
         </li>

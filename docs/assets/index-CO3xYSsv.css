@@ -3686,9 +3686,6 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
-.grid-cols-\[100px_1fr\] {
-  grid-template-columns: 100px 1fr;
-}
 .grid-cols-\[110px_1fr\] {
   grid-template-columns: 110px 1fr;
 }
@@ -3786,10 +3783,6 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .gap-x-2 {
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem;
-}
-.gap-x-3 {
-  -moz-column-gap: 0.75rem;
-       column-gap: 0.75rem;
 }
 .gap-x-4 {
   -moz-column-gap: 1rem;
