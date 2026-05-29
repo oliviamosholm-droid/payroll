@@ -175,8 +175,8 @@ function SectionCard({
     };
 
     const body = (
-        <div className="px-6 pb-6 flex flex-col gap-4">
-            <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
+        <div className="px-5 pb-4 flex flex-col gap-3">
+            <dl className="grid grid-cols-3 gap-x-6 gap-y-3">
                 {renderBody(isEditing)}
             </dl>
             {footer}
@@ -184,7 +184,7 @@ function SectionCard({
     );
 
     const header = (
-        <header className="px-6 py-4 flex items-center justify-between">
+        <header className="px-5 py-3 flex items-center justify-between">
             <h2 className="text-base font-bold text-neutral-900">{title}</h2>
             {isEditing ? (
                 <div className="flex items-center gap-2">
@@ -417,8 +417,8 @@ function PaymentBody({
     };
 
     const body = (
-        <div className="px-6 pb-6">
-            <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
+        <div className="px-5 pb-4">
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-3">
                 {renderField(isEditing, {
                     name: 'bankReg',
                     label: t.bankReg,
@@ -454,7 +454,7 @@ function PaymentBody({
     );
 
     const header = (
-        <header className="px-6 py-4 flex items-center justify-between">
+        <header className="px-5 py-3 flex items-center justify-between">
             <h2 className="text-base font-bold text-neutral-900">
                 {da.detailPage.sections.payment}
             </h2>
@@ -504,8 +504,8 @@ function TaxCardSection() {
     };
 
     const body = (
-        <div className="px-6 pb-6 flex flex-col gap-4">
-            <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
+        <div className="px-5 pb-4 flex flex-col gap-3">
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-3">
                 {renderField(isEditing, {
                     name: 'cardType',
                     label: t.cardType,
@@ -542,7 +542,7 @@ function TaxCardSection() {
     );
 
     const header = (
-        <header className="px-6 py-4 flex items-center justify-between">
+        <header className="px-5 py-3 flex items-center justify-between">
             <h2 className="text-base font-bold text-neutral-900">
                 {da.detailPage.sections.taxCard}
             </h2>
@@ -599,8 +599,8 @@ function HolidaySection() {
     };
 
     const body = (
-        <div className="px-6 pb-6">
-            <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
+        <div className="px-5 pb-4">
+            <dl className="grid grid-cols-3 gap-x-6 gap-y-3">
                 {renderField(isEditing, {
                     name: 'scheme',
                     label: t.scheme,
@@ -631,7 +631,7 @@ function HolidaySection() {
     );
 
     const header = (
-        <header className="px-6 py-4 flex items-center justify-between">
+        <header className="px-5 py-3 flex items-center justify-between">
             <h2 className="text-base font-bold text-neutral-900">
                 {da.detailPage.sections.holiday}
             </h2>
@@ -986,10 +986,10 @@ function OverviewTab({ employee }: { employee: Employee }) {
     };
 
     return (
-        <div className="flex gap-8 pt-6 items-start">
-            <div className="flex-1 min-w-0 flex flex-col gap-6">
+        <div className="flex gap-8 pt-5 items-start">
+            <div className="flex-1 min-w-0 flex flex-col gap-4">
                 <PersonalInfoSection employee={employee} />
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-4">
                     <PaymentSection employee={employee} />
                     <TaxCardSection />
                 </div>

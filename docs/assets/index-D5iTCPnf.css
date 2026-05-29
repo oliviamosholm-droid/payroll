@@ -3804,10 +3804,6 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
 }
-.gap-x-8 {
-  -moz-column-gap: 2rem;
-       column-gap: 2rem;
-}
 .gap-y-0\.5 {
   row-gap: 0.125rem;
 }
@@ -3817,11 +3813,11 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .gap-y-2 {
   row-gap: 0.5rem;
 }
+.gap-y-3 {
+  row-gap: 0.75rem;
+}
 .gap-y-4 {
   row-gap: 1rem;
-}
-.gap-y-5 {
-  row-gap: 1.25rem;
 }
 .gap-y-px {
   row-gap: 1px;
@@ -4476,8 +4472,8 @@ table[data-taco='table3'] td[data-taco='save-status'] [data-taco='spinner'] svg 
 .pt-4 {
   padding-top: 1rem;
 }
-.pt-6 {
-  padding-top: 1.5rem;
+.pt-5 {
+  padding-top: 1.25rem;
 }
 .pt-8 {
   padding-top: 2rem;
