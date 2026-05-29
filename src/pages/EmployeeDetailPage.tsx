@@ -99,16 +99,24 @@ function ReadOnlyField({
                 {required && '*'}
             </dt>
             <dd
-                className={`text-sm leading-5 truncate ${
-                    highlight
-                        ? 'inline-flex self-start bg-yellow-100 rounded px-2 py-0.5 -mx-2 text-neutral-900 font-medium max-w-full'
-                        : isMissing
-                          ? 'text-neutral-500'
-                          : 'text-neutral-900'
+                className={`flex items-center gap-1.5 min-w-0 text-sm leading-5 ${
+                    isMissing && !highlight
+                        ? 'text-neutral-500'
+                        : 'text-neutral-900'
                 }`}
-                title={display}
             >
-                {display}
+                <span className="truncate" title={display}>
+                    {display}
+                </span>
+                {highlight && (
+                    <span
+                        className="inline-flex items-center text-blue-500 shrink-0"
+                        title="Udtrukket af AI"
+                        aria-label="Udtrukket af AI"
+                    >
+                        <Icon name="ai-stars" />
+                    </span>
+                )}
             </dd>
         </div>
     );
@@ -138,7 +146,17 @@ function EditableField({
             <Input
                 name={name}
                 defaultValue={defaultValue ?? ''}
-                className={highlight ? 'bg-yellow-100' : undefined}
+                postfix={
+                    highlight ? (
+                        <span
+                            className="inline-flex items-center text-blue-500"
+                            title="Udtrukket af AI"
+                            aria-label="Udtrukket af AI"
+                        >
+                            <Icon name="ai-stars" />
+                        </span>
+                    ) : undefined
+                }
             />
         </div>
     );
