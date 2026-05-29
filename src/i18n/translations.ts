@@ -156,26 +156,16 @@ export const danishToEnglish: Record<string, string> = {
     'Tilføj flere...': 'Add more...',
     'Analyserer dine filer og matcher mod eksisterende medarbejdere...':
         'Analyzing your files and matching against existing employees...',
-    'AI har matched dine filer': 'AI matched your files',
-    'Gennemgå hvad der bliver opdateret og oprettet, før du bekræfter.':
-        'Review what will be updated and created before confirming.',
-    'Opdaterer eksisterende udkast': 'Updating existing drafts',
-    'Konflikter — vælg hvilken værdi der gælder':
-        'Conflicts — choose which value applies',
-    'Opretter nye udkast': 'Creating new drafts',
-    opdateres: 'updated',
-    konflikt: 'conflict',
-    nyt: 'new',
+    'AI matchede dine filer': 'AI matched your files',
+    'OPDATERER EKSISTERENDE': 'UPDATING EXISTING',
+    'KONFLIKT — VÆLG VÆRDI': 'CONFLICT — PICK A VALUE',
+    'OPRETTER NYT UDKAST': 'CREATING NEW DRAFT',
+    Kladde: 'Draft',
     'CPR-match': 'Civil reg. match',
     'Navne-match': 'Name match',
-    'Ingen match — oprettes som nyt udkast':
-        'No match — created as new draft',
-    'Eksisterende værdi': 'Existing value',
-    'Ny værdi fra dokument': 'New value from document',
-    'Behold eksisterende': 'Keep existing',
+    'Nye felter fra dokumentet': 'New fields from the document',
+    'Behold': 'Keep',
     'Erstat med ny': 'Replace with new',
-    'Vælg en handling for hver konflikt før du kan bekræfte importen.':
-        'Choose an action for each conflict before you can confirm the import.',
     'AI fandt ingen brugbar information i de uploadede filer.':
         'AI found no usable information in the uploaded files.',
     'Bekræft import': 'Confirm import',
@@ -407,22 +397,23 @@ export const dynamicPatterns: RegexPattern[] = [
         toEn: (m) => `Creating ${m[1]} new drafts`,
         toDa: (m) => `Opretter ${m[1]} nye udkast`,
     },
-    // ImportDialog preview header: "1 udkast opdateres · 1 konflikt · 1 nye udkast"
-    // (uses the same noun forms regardless of count by design)
+    // ImportDialog preview summary, e.g. "· 1 opdateres · 1 konflikt · 1 ny"
+    // The leading "· " is rendered separately, so this matches just the
+    // count clauses joined by " · ".
     {
-        da: /^(\d+) udkast opdateres · (\d+) (konflikt|konflikter) · (\d+) (nyt udkast|nye udkast)$/,
-        en: /^(\d+) drafts updated · (\d+) (conflict|conflicts) · (\d+) (new draft|new drafts)$/,
+        da: /^(\d+) opdateres · (\d+) (konflikt|konflikter) · (\d+) (ny|nye)$/,
+        en: /^(\d+) updated · (\d+) (conflict|conflicts) · (\d+) (new|new ones)$/,
         toEn: (m) => {
-            const conflict = m[3] === 'konflikt' ? 'conflict' : 'conflicts';
-            const creates =
-                m[5] === 'nyt udkast' ? 'new draft' : 'new drafts';
-            return `${m[1]} drafts updated · ${m[2]} ${conflict} · ${m[4]} ${creates}`;
+            const conflict =
+                m[3] === 'konflikt' ? 'conflict' : 'conflicts';
+            const created = m[5] === 'ny' ? 'new' : 'new ones';
+            return `${m[1]} updated · ${m[2]} ${conflict} · ${m[4]} ${created}`;
         },
         toDa: (m) => {
-            const konflikt = m[3] === 'conflict' ? 'konflikt' : 'konflikter';
-            const nye =
-                m[5] === 'new draft' ? 'nyt udkast' : 'nye udkast';
-            return `${m[1]} udkast opdateres · ${m[2]} ${konflikt} · ${m[4]} ${nye}`;
+            const konflikt =
+                m[3] === 'conflict' ? 'konflikt' : 'konflikter';
+            const ny = m[5] === 'new' ? 'ny' : 'nye';
+            return `${m[1]} opdateres · ${m[2]} ${konflikt} · ${m[4]} ${ny}`;
         },
     },
     // Source-file caption: "Fra Lønsedler_marts_2026.pdf"

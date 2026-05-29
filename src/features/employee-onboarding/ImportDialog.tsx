@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, Button, Spinner, Badge, Icon } from '@economic/taco';
 import { DropZone } from './DropZone';
 import {
@@ -56,7 +56,7 @@ type Preview = {
     creates: Creation[];
 };
 
-type ConflictResolution = 'keep' | 'override' | null;
+type ConflictResolution = 'keep' | 'override';
 
 type Props = {
     open: boolean;
@@ -174,45 +174,66 @@ function buildPreview(files: UploadedFile[], employees: Employee[]): Preview {
 
 // --- UI sub-components ---------------------------------------------------
 
+function RowHeader({
+    name,
+    metaParts,
+}: {
+    name: string;
+    metaParts: string[];
+}) {
+    return (
+        <div className="flex items-start gap-3">
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded bg-grey-100 text-neutral-700 shrink-0">
+                <Icon name="document" />
+            </span>
+            <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+                <span className="text-sm font-bold text-neutral-900">
+                    {name}
+                </span>
+                <span className="text-xs text-neutral-500">
+                    {metaParts.filter(Boolean).join(' · ')}
+                </span>
+            </div>
+        </div>
+    );
+}
+
 function EnrichmentCard({ enrichment }: { enrichment: Enrichment }) {
     const t = da.importDialog.preview;
     return (
-        <li className="flex flex-col gap-3 w-full px-4 py-3 bg-white border border-grey-300 rounded-lg">
-            <div className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded text-neutral-500 shrink-0">
-                    <Icon name="user" />
-                </span>
-                <div className="flex-1 min-w-0 flex flex-col gap-0.5">
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-bold text-neutral-900">
-                            {enrichment.employee.name}
-                        </span>
-                        <Badge color="blue" subtle>
-                            {t.updateBadge}
-                        </Badge>
-                    </div>
-                    <span className="text-xs text-neutral-500">
-                        {enrichment.matchLabel} ·{' '}
-                        {t.newFields(enrichment.fields.length)} ·{' '}
-                        {t.fromFile(enrichment.sourceFile)}
-                    </span>
-                </div>
+        <li className="flex flex-col w-full bg-white border border-grey-300 rounded-lg overflow-hidden">
+            <div className="px-4 py-3">
+                <RowHeader
+                    name={enrichment.employee.name}
+                    metaParts={[
+                        enrichment.matchLabel,
+                        t.newFields(enrichment.fields.length),
+                        t.fromFile(enrichment.sourceFile),
+                    ]}
+                />
             </div>
-            <ul className="flex flex-col gap-1 pl-[52px]">
-                {enrichment.fields.map((f) => (
-                    <li
-                        key={String(f.key)}
-                        className="flex items-baseline gap-2 text-xs"
-                    >
-                        <span className="text-neutral-500 min-w-[80px]">
-                            {f.label}
-                        </span>
-                        <span className="rounded px-2 py-0.5 bg-yellow-100 text-neutral-900">
-                            {f.value}
-                        </span>
-                    </li>
-                ))}
-            </ul>
+            <div className="border-t border-grey-200 px-4 py-3">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                    {t.newFieldsLabel}
+                </p>
+                <dl className="grid grid-cols-[120px_1fr] gap-x-3 gap-y-1.5">
+                    {enrichment.fields.map((f) => (
+                        <div
+                            key={String(f.key)}
+                            className="contents text-xs"
+                        >
+                            <dt className="text-neutral-500 self-center">
+                                {f.label}
+                            </dt>
+                            <dd className="self-center">
+                                <span className="rounded px-2 py-0.5 bg-yellow-100 text-neutral-900 inline-block max-w-full truncate">
+                                    {f.value}
+                                </span>
+                            </dd>
+                        </div>
+                    ))}
+                </dl>
+            </div>
         </li>
     );
 }
@@ -228,129 +249,152 @@ function ConflictCard({
 }) {
     const t = da.importDialog.preview;
     return (
-        <li className="flex flex-col gap-4 w-full px-4 py-3 bg-white border border-grey-300 rounded-lg">
-            <div className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded text-neutral-500 shrink-0">
-                    <Icon name="user" />
-                </span>
-                <div className="flex-1 min-w-0 flex flex-col gap-0.5">
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-bold text-neutral-900">
-                            {conflict.employee.name}
-                        </span>
-                        <Badge color="orange" subtle>
-                            {t.conflictBadge}
-                        </Badge>
-                    </div>
-                    <span className="text-xs text-neutral-500">
-                        {conflict.matchLabel} ·{' '}
-                        {t.fromFile(conflict.sourceFile)}
-                    </span>
-                </div>
+        <li className="flex flex-col w-full bg-white border border-grey-300 rounded-lg overflow-hidden">
+            <div className="px-4 py-3">
+                <RowHeader
+                    name={conflict.employee.name}
+                    metaParts={[
+                        conflict.matchLabel,
+                        t.fromFile(conflict.sourceFile),
+                    ]}
+                />
             </div>
-            <ul className="flex flex-col gap-3 pl-[52px]">
+            <div className="border-t border-grey-200 px-4 py-3 flex flex-col gap-4">
                 {conflict.fields.map((f) => {
-                    const choice = resolutions[String(f.key)] ?? null;
+                    const choice =
+                        resolutions[String(f.key)] ?? 'override';
                     return (
-                        <li
+                        <ConflictFieldGroup
                             key={String(f.key)}
-                            className="flex flex-col gap-2"
-                        >
-                            <p className="text-xs font-bold text-neutral-700">
-                                {f.label}
-                            </p>
-                            <div className="grid grid-cols-2 gap-2">
-                                <ConflictValueOption
-                                    label={t.existingLabel}
-                                    value={f.existing}
-                                    tone="muted"
-                                    selected={choice === 'keep'}
-                                    actionLabel={t.keepExisting}
-                                    onClick={() =>
-                                        onResolve(String(f.key), 'keep')
-                                    }
-                                />
-                                <ConflictValueOption
-                                    label={t.newLabel}
-                                    value={f.incoming}
-                                    tone="new"
-                                    selected={choice === 'override'}
-                                    actionLabel={t.overrideWithNew}
-                                    onClick={() =>
-                                        onResolve(String(f.key), 'override')
-                                    }
-                                />
-                            </div>
-                        </li>
+                            employeeId={conflict.employee.id}
+                            field={f}
+                            choice={choice}
+                            onResolve={(c) => onResolve(String(f.key), c)}
+                        />
                     );
                 })}
-            </ul>
+            </div>
         </li>
     );
 }
 
-function ConflictValueOption({
-    label,
-    value,
-    tone,
-    selected,
-    actionLabel,
-    onClick,
+function ConflictFieldGroup({
+    employeeId,
+    field,
+    choice,
+    onResolve,
 }: {
-    label: string;
-    value: string;
-    tone: 'muted' | 'new';
-    selected: boolean;
-    actionLabel: string;
-    onClick: () => void;
+    employeeId: string;
+    field: ConflictField;
+    choice: ConflictResolution;
+    onResolve: (choice: ConflictResolution) => void;
 }) {
-    const valueChipClass =
-        tone === 'new'
-            ? 'bg-yellow-100 text-neutral-900'
-            : 'bg-grey-100 text-neutral-700';
-    const borderClass = selected
-        ? 'border-blue-500'
-        : 'border-grey-300 hover:border-grey-500';
+    const t = da.importDialog.preview;
+    const groupName = `conflict-${employeeId}-${String(field.key)}`;
     return (
-        <button
-            type="button"
-            onClick={onClick}
-            aria-pressed={selected}
-            className={`group flex flex-col gap-1.5 text-left rounded-md border bg-white px-3 py-2.5 transition-colors ${borderClass}`}
-        >
-            <span className="text-[11px] uppercase tracking-wider font-bold text-neutral-500">
-                {label}
-            </span>
-            <span
-                className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${valueChipClass} self-start max-w-full truncate`}
-                title={value}
+        <div className="flex flex-col gap-2">
+            <p className="text-xs text-neutral-700">
+                <span className="font-bold">{field.label}</span>{' '}
+                {t.conflictExplanation(field.label).replace(`${field.label} `, '')}
+            </p>
+            <fieldset
+                role="radiogroup"
+                aria-label={field.label}
+                className="flex flex-col gap-2"
             >
-                {value}
-            </span>
-            <span
-                className={`text-xs font-bold inline-flex items-center gap-1 ${
-                    selected ? 'text-blue-700' : 'text-neutral-700'
-                }`}
-            >
-                {selected ? (
-                    <Icon name="tick" />
-                ) : (
-                    <span
-                        aria-hidden="true"
-                        className="inline-block w-3.5 h-3.5 rounded-full border border-grey-500"
-                    />
-                )}
-                {actionLabel}
-            </span>
-        </button>
+                <ConflictRadioOption
+                    name={groupName}
+                    value="keep"
+                    label={t.keepExisting}
+                    displayValue={field.existing}
+                    tone="muted"
+                    checked={choice === 'keep'}
+                    onChange={() => onResolve('keep')}
+                />
+                <ConflictRadioOption
+                    name={groupName}
+                    value="override"
+                    label={t.overrideWithNew}
+                    displayValue={field.incoming}
+                    tone="new"
+                    checked={choice === 'override'}
+                    onChange={() => onResolve('override')}
+                />
+            </fieldset>
+        </div>
     );
 }
 
-function CreatedCard({ creation }: { creation: Creation }) {
+function ConflictRadioOption({
+    name,
+    value,
+    label,
+    displayValue,
+    tone,
+    checked,
+    onChange,
+}: {
+    name: string;
+    value: ConflictResolution;
+    label: string;
+    displayValue: string;
+    tone: 'muted' | 'new';
+    checked: boolean;
+    onChange: () => void;
+}) {
+    const containerClass = checked
+        ? 'border-blue-500 bg-blue-50/50'
+        : 'border-grey-300 hover:border-grey-500';
+    const chipClass =
+        tone === 'new'
+            ? 'bg-yellow-100 text-neutral-900'
+            : 'bg-grey-100 text-neutral-700';
+    return (
+        <label
+            className={`flex items-center gap-3 rounded-md border px-3 py-2.5 cursor-pointer transition-colors ${containerClass}`}
+        >
+            <input
+                type="radio"
+                name={name}
+                value={value}
+                checked={checked}
+                onChange={onChange}
+                className="sr-only peer"
+            />
+            <span
+                aria-hidden="true"
+                className={`inline-flex items-center justify-center w-4 h-4 rounded-full border-2 shrink-0 ${
+                    checked
+                        ? 'border-blue-500'
+                        : 'border-grey-500'
+                }`}
+            >
+                {checked && (
+                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                )}
+            </span>
+            <span
+                className={`text-xs font-bold ${
+                    checked ? 'text-blue-700' : 'text-neutral-900'
+                } shrink-0`}
+            >
+                {label}
+            </span>
+            <span
+                className={`text-xs rounded px-2 py-0.5 ${chipClass} truncate min-w-0`}
+                title={displayValue}
+            >
+                {displayValue}
+            </span>
+        </label>
+    );
+}
+
+function NewDraftCard({ creation }: { creation: Creation }) {
     const t = da.importDialog.preview;
     return (
         <li className="flex items-center gap-3 w-full px-4 py-3 bg-white border border-grey-300 rounded-lg">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded text-neutral-500 shrink-0">
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded bg-grey-100 text-neutral-700 shrink-0">
                 <Icon name="document" />
             </span>
             <div className="flex-1 min-w-0 flex flex-col gap-0.5">
@@ -358,12 +402,12 @@ function CreatedCard({ creation }: { creation: Creation }) {
                     <span className="text-sm font-bold text-neutral-900">
                         {creation.employee.name}
                     </span>
-                    <Badge color="green" subtle>
-                        {t.createBadge}
+                    <Badge color="orange" subtle>
+                        {t.draftPill}
                     </Badge>
                 </div>
                 <span className="text-xs text-neutral-500">
-                    {t.noMatch} · {t.fromFile(creation.sourceFile)}
+                    {creation.sourceFile}
                 </span>
             </div>
         </li>
@@ -429,17 +473,8 @@ export function ImportDialog({ open, onOpenChange, onProcessed }: Props) {
         }));
     };
 
-    const conflictsResolved = useMemo(() => {
-        if (!preview) return true;
-        return preview.conflicts.every((c) =>
-            c.fields.every(
-                (f) => resolutions[c.employee.id]?.[String(f.key)] != null,
-            ),
-        );
-    }, [preview, resolutions]);
-
     const handleConfirm = () => {
-        if (!preview || !conflictsResolved) return;
+        if (!preview) return;
         // Apply enrichments — additive merge, no destructive overwrite.
         for (const enrichment of preview.enrichments) {
             const patch: Partial<Employee> = {};
@@ -448,12 +483,14 @@ export function ImportDialog({ open, onOpenChange, onProcessed }: Props) {
             }
             updateEmployee(enrichment.employee.id, patch);
         }
-        // Apply conflict resolutions — only override when the user picked it.
+        // Apply conflict resolutions — default is 'override' (the new value
+        // wins). Only skip the patch when the user explicitly picked 'keep'.
         for (const conflict of preview.conflicts) {
             const patch: Partial<Employee> = {};
             for (const f of conflict.fields) {
                 const choice =
-                    resolutions[conflict.employee.id]?.[String(f.key)];
+                    resolutions[conflict.employee.id]?.[String(f.key)] ??
+                    'override';
                 if (choice === 'override') {
                     (patch as Record<string, unknown>)[String(f.key)] =
                         f.incoming;
@@ -563,16 +600,6 @@ export function ImportDialog({ open, onOpenChange, onProcessed }: Props) {
 
                     {step === 'preview' && (
                         <div className="flex items-center justify-end gap-3 w-full">
-                            {!conflictsResolved &&
-                                preview &&
-                                preview.conflicts.length > 0 && (
-                                    <span className="text-xs text-neutral-500">
-                                        {
-                                            da.importDialog.preview
-                                                .resolveAllHint
-                                        }
-                                    </span>
-                                )}
                             <Button
                                 appearance="default"
                                 onClick={handleBackToFiles}
@@ -582,7 +609,6 @@ export function ImportDialog({ open, onOpenChange, onProcessed }: Props) {
                             <Button
                                 appearance="primary"
                                 onClick={handleConfirm}
-                                disabled={!conflictsResolved}
                             >
                                 {t.actions.confirm}
                             </Button>
@@ -608,20 +634,22 @@ function PreviewBody({
     ) => void;
 }) {
     const t = da.importDialog.preview;
+    const summary = t.subSummary(
+        preview.enrichments.length,
+        preview.conflicts.length,
+        preview.creates.length,
+    );
     return (
-        <div className="flex flex-col gap-3 py-1">
-            <div className="flex flex-col gap-0.5">
-                <h2 className="text-base font-bold text-neutral-900">
-                    {t.heading}
-                </h2>
-                <p className="text-xs text-neutral-500">
-                    {t.subN(
-                        preview.enrichments.length,
-                        preview.conflicts.length,
-                        preview.creates.length,
-                    )}
-                </p>
-            </div>
+        <div className="flex flex-col gap-4 py-1">
+            <p className="text-sm text-neutral-900">
+                <strong className="font-bold">{t.heading}</strong>
+                {summary && (
+                    <>
+                        {' '}
+                        <span className="text-neutral-500">· {summary}</span>
+                    </>
+                )}
+            </p>
 
             {preview.enrichments.length > 0 && (
                 <PreviewSection
@@ -668,7 +696,7 @@ function PreviewBody({
                 >
                     <ul className="flex flex-col gap-2 w-full max-w-none">
                         {preview.creates.map((c) => (
-                            <CreatedCard
+                            <NewDraftCard
                                 key={c.employee.id}
                                 creation={c}
                             />
